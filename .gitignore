@@ -2,7 +2,13 @@
 __pycache__/
 *.py[cod]
 *.egg-info/
+# virtualenv
+myvenv/
 venv/
 .venv/
 env/
+
+# jupyter notebook
 .ipynb_checkpoints/
+
+# distribution / packaging
