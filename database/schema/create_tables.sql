@@ -30,7 +30,7 @@ CREATE TABLE resources (
     resource_name      VARCHAR(100) NOT NULL,
     resource_category  VARCHAR(50),
     unit_cost          DECIMAL(10,2),
-    descriptcion        VARCHAR(255)
+    description        VARCHAR(255)
 );
 
 -- 5. Programs catalog
