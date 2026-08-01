@@ -1,0 +1,11 @@
+exit_reason_id,stage,reason
+1,Eligibility,Did not meet eligibility requirements
+2,Eligibility,Incomplete application
+3,Eligibility,Missing required documents
+4,Eligibility,Application submitted after deadline
+5,Selection,Cohort reached capacity
+6,Interview,Interview not attended
+7,Interview,Interview unsuccessful
+8,Offer,Offer declined
+9,Enrollment,Failed to confirm enrollment
+10,Enrollment,Withdrew voluntarily

@@ -7,27 +7,52 @@ import random
 from datetime import datetime
 
 import pandas as pd
-from faker import Faker
 
 from config import (
     DATA_DIR,
     RANDOM_SEED,
-    FAKER_LOCALE,
     COUNTIES,
+    COUNTY_WEIGHTS,
     PROGRAMS,
+    PROGRAM_DISTRIBUTION,
     YEAR_CONFIGURATION
 )
 
-fake = Faker(FAKER_LOCALE)
-
 random.seed(RANDOM_SEED)
-Faker.seed(RANDOM_SEED)
+GENDERS = ["Female"]
+FIRST_NAMES = [
 
+    "Amina","Halima","Fatuma","Saumu","Aisha",
+    "Mwanajuma","Mariam","Zainabu","Salma","Mishi",
+    "Neema","Joyce","Faith","Mercy","Brenda",
+    "Purity","Christine","Caroline","Rose","Grace",
+    "Janet","Sharon","Sheila","Dorcas","Esther",
+    "Ann","Lydia","Agnes","Diana","Cynthia"
+
+]
+
+LAST_NAMES = [
+
+    "Juma","Mwajuma","Mwakio","Mwandawiro",
+    "Mwashumbe","Mghoi","Kazungu","Kombe",
+    "Baya","Kenga","Munga","Mwadime",
+    "Mwangeka","Masha","Mutiso","Kioko",
+    "Musyoka","Odhiambo","Achieng","Otieno",
+    "Omondi","Njeri","Wambui","Chebet",
+    "Kemunto"
+
+]
+
+PHONE_PREFIXES = [
+
+    "070","071","072","073","074",
+    "075","076","077","078","079",
+    "010","011"
+
+]
 
 
 # LOOKUP VALUES
-
-
 EDUCATION_LEVELS = [
     "Primary",
     "Secondary",
@@ -53,64 +78,86 @@ GENDERS = [
 
 
 # HELPER FUNCTIONS
-
-
 def weighted_program(year):
 
-    available = [
-        p for p in PROGRAMS
-        if p["launch_year"] <= year
-    ]
+    distribution = PROGRAM_DISTRIBUTION[year]
 
-    return random.choice(available)
+    program_ids = list(distribution.keys())
 
+    weights = list(distribution.values())
+
+    selected_id = random.choices(
+
+        program_ids,
+
+        weights=weights,
+
+        k=1
+
+    )[0]
+
+    return next(
+
+        program
+
+        for program in PROGRAMS
+
+        if program["program_id"] == selected_id
+
+    )
 
 def weighted_county():
 
-    weights = [
+    county_ids = list(
 
-        35,     # Mombasa
+        COUNTY_WEIGHTS.keys()
 
-        25,     # Kilifi
+    )
 
-        15,     # Kwale
+    weights = list(
 
-        10,     # Taita Taveta
+        COUNTY_WEIGHTS.values()
 
-        8,      # Lamu
+    )
 
-        7       # Tana River
+    selected = random.choices(
 
-    ]
+        county_ids,
 
-    return random.choices(
-        COUNTIES,
         weights=weights,
+
         k=1
+
     )[0]
+
+    return next(
+
+        county
+
+        for county in COUNTIES
+
+        if county["county_id"] == selected
+
+    )
 
 
 def random_phone():
 
-    prefixes = [
-        "070",
-        "071",
-        "072",
-        "074",
-        "075",
-        "079",
-        "010",
-        "011"
-    ]
+    prefix = random.choice(
 
-    return (
-        random.choice(prefixes)
-        + "".join(
-            str(random.randint(0,9))
-            for _ in range(7)
-        )
+        PHONE_PREFIXES
+
     )
 
+    suffix = "".join(
+
+        str(random.randint(0,9))
+
+        for _ in range(7)
+
+    )
+
+    return prefix + suffix
 
 def random_birthdate(year):
 
@@ -139,9 +186,8 @@ def random_birthdate(year):
         day
 
     ).date()
+
 # MAIN GENERATOR
-
-
 def generate():
 
     applicants = []
@@ -162,9 +208,9 @@ def generate():
 
             program = weighted_program(year)
 
-            first_name = fake.first_name_female()
+            first_name = random.choice(FIRST_NAMES)
 
-            last_name = fake.last_name()
+            last_name = random.choice(LAST_NAMES)
 
             email = (
 
@@ -174,7 +220,7 @@ def generate():
 
                 + last_name.lower()
 
-                + str(random.randint(1,999))
+                + str(random.randint(100,999))
 
                 + "@gmail.com"
 

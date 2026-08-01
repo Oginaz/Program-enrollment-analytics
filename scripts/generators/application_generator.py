@@ -1,12 +1,9 @@
 """
-==========================================================
 PWANI TEKNOWGALZ
 APPLICATION GENERATOR
-==========================================================
 """
 
 import random
-from datetime import timedelta
 
 import pandas as pd
 
@@ -14,119 +11,121 @@ from config import (
     DATA_DIR,
     RANDOM_SEED,
     APPLICATION_CHANNELS,
-    EXIT_REASONS
+    YEAR_CONFIGURATION
 )
 
 random.seed(RANDOM_SEED)
 
-
-APPLICATION_STATUSES = [
-
-    "Rejected",
-
-    "Enrolled"
-
-]
-
-
 CHANNEL_WEIGHTS = [
-
     40,     # School Outreach
-
     15,     # Website
-
     18,     # Social Media
-
     10,     # Referral
-
     10,     # Community
-
     4,      # Career Fair
-
     3       # Partner
 ]
 
+DOCUMENT_EXIT_REASONS = [1, 2, 3, 4]
+INTERVIEW_EXIT_REASONS = [6, 7]
+YEAR_TARGET_RATE = {
+
+    2015: 0.28,
+    2016: 0.26,
+    2017: 0.24,
+    2018: 0.22,
+    2019: 0.20,
+
+    2020: 0.18,
+
+    2021: 0.16,
+
+    2022: 0.15,
+    2023: 0.15,
+    2024: 0.15,
+    2025: 0.15,
+    2026: 0.15
+
+}
 
 def random_channel():
-
     return random.choices(
-
         APPLICATION_CHANNELS,
-
         weights=CHANNEL_WEIGHTS,
-
         k=1
-
     )[0]
-
-
-def random_exit():
-
-    return random.choice(EXIT_REASONS)
 
 
 def generate():
 
     applicants = pd.read_csv(
-
         DATA_DIR / "applicants.csv"
-
     )
 
     cohorts = pd.read_csv(
-
         DATA_DIR / "cohorts.csv"
-
     )
+
+    # Remaining seats per cohort
+    remaining_capacity = {
+        row.cohort_id: row.capacity
+        for _, row in cohorts.iterrows()
+    }
 
     applications = []
 
     application_id = 1
 
-    enrolled_counter = 0
-
-    enrollment_target = int(
-
-        len(applicants) * 0.15
-
-    )
+    yearly_enrolled = {year: 0 for year in YEAR_TARGET_RATE}
 
     for _, applicant in applicants.iterrows():
 
-        eligible = random.random() < 0.90
+        application_year = pd.to_datetime(
+            applicant.registered_at
+        ).year
+
+        year_target = int(YEAR_CONFIGURATION[application_year]["applications"] * YEAR_TARGET_RATE[application_year])
+
+        eligible_cohorts = cohorts[
+            (cohorts.program_id == applicant.program_id)
+            &
+            (cohorts.year == application_year)
+        ]
+
+        if len(eligible_cohorts) == 0:
+            continue
+
+        available = eligible_cohorts[eligible_cohorts.cohort_id.map(remaining_capacity) > 0]
+
+        if len(available) == 0:
+            continue
+        selected_cohort = available.sample(1).iloc[0]
+
+        eligible = random.random() < 0.97
 
         interviewed = False
 
-        offer = False
+        interview_pass = False
 
         enrolled = False
 
         stage = "Eligibility"
 
+        status = "Rejected"
+
         exit_reason = None
 
-        cohort = cohorts[
+        interview_result = "Not Interviewed"
 
-            cohorts.program_id == applicant.program_id
+        offer_status = "Not Offered"
 
-        ]
-
-        if len(cohort) == 0:
-
-            continue
-
-        selected_cohort = cohort.sample(1).iloc[0]
-
+        # Eligibility
         if not eligible:
-
-            status = "Rejected"
 
             stage = "Eligibility"
 
             exit_reason = random.choice(
-
-                [1,2,3,4]
-
+                DOCUMENT_EXIT_REASONS
             )
 
         else:
@@ -135,54 +134,54 @@ def generate():
 
             stage = "Interview"
 
-            interview_pass = random.random() < 0.35
+            interview_pass = (
+                random.random() < 0.85
+            )
 
+            if interview_pass:
+
+                interview_result = "Passed"
+
+            else:
+
+                interview_result = "Failed"
+
+            # Interview Failed
             if not interview_pass:
 
-                status = "Rejected"
-
                 exit_reason = random.choice(
-
-                    [6,7]
-
+                    INTERVIEW_EXIT_REASONS
                 )
 
             else:
 
-                offer = True
+                offer_status = "Offered"
 
-                stage = "Offer"
+                stage = "Selection"
 
-                accepted = (
-
-                    enrolled_counter
-
-                    < enrollment_target
-
-                )
-
-                if accepted:
-
-                    enrolled = True
+           
+                # Capacity Check
+                if (
+                    yearly_enrolled[application_year] < year_target and remaining_capacity[selected_cohort.cohort_id] > 0 ):
 
                     status = "Enrolled"
 
-                    exit_reason = None
+                    enrolled = True
 
-                    enrolled_counter += 1
+                    yearly_enrolled[application_year] += 1
+
+                    remaining_capacity[
+                        selected_cohort.cohort_id
+                    ] -= 1
 
                 else:
 
                     status = "Rejected"
 
-                    stage = "Selection"
-
                     exit_reason = 5
 
         application_date = pd.to_datetime(
-
             applicant.registered_at
-
         )
 
         applications.append({
@@ -197,17 +196,23 @@ def generate():
 
             "application_date": application_date,
 
-            "eligibility_status": "Eligible" if eligible else "Not Eligible",
+            "eligibility_status":
+                "Eligible" if eligible else "Not Eligible",
 
-            "interview_result": "Passed" if interviewed else "Not Interviewed",
+            "interview_result":
+                interview_result,
 
-            "offer_status": "Accepted" if offer else "Not Offered",
+            "offer_status":
+                offer_status,
 
-            "application_status": status,
+            "application_status":
+                status,
 
-            "stage": stage,
+            "stage":
+                stage,
 
-            "exit_reason_id": exit_reason
+            "exit_reason_id":
+                exit_reason
 
         })
 
@@ -216,23 +221,24 @@ def generate():
     df = pd.DataFrame(applications)
 
     df.to_csv(
-
         DATA_DIR / "applications.csv",
-
         index=False
-
     )
 
     print(
-
-        f"✓ applications.csv ({len(df)} records)"
-
+        f" applications.csv ({len(df)} records)"
     )
 
-    print(
+    print("\nEnrollment Summary")
 
-        f"Total Enrolled = {enrolled_counter}"
+    total = 0
 
-    )
+    for year in sorted(yearly_enrolled):
+        print(
+        f"{year}: {yearly_enrolled[year]}")
+
+        total += yearly_enrolled[year]
+
+    print(f"\nTOTAL ENROLLED = {total}")
 
     return df

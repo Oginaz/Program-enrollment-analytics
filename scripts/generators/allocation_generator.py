@@ -12,73 +12,105 @@ from config import DATA_DIR, RANDOM_SEED
 random.seed(RANDOM_SEED)
 
 
-RESOURCE_PROBABILITIES = {
-
-    1:0.35,     # Laptop
-
-    2:1.00,     # Internet
-
-    3:1.00,     # Manual
-
-    4:1.00,     # Stationery
-
-    5:0.55,     # Meals
-
-    6:0.30,     # Transport
-
-    7:1.00,     # Mentorship
-
-    8:0.90      # T-Shirt
-
-}
-
-
 def generate():
 
     enrollments = pd.read_csv(
-
         DATA_DIR / "enrollments.csv"
+    )
 
+    applications = pd.read_csv(
+        DATA_DIR / "applications.csv"
+    )
+
+    cohorts = pd.read_csv(
+        DATA_DIR / "cohorts.csv"
+    )
+
+    # Merge to obtain each participant's cohort
+    merged = enrollments.merge(
+        applications[["application_id", "cohort_id"]],
+        on="application_id"
+    )
+
+    merged = merged.merge(
+        cohorts[["cohort_id", "delivery_mode"]],
+        on="cohort_id"
     )
 
     allocations = []
 
     allocation_id = 1
 
-    for _, enrollment in enrollments.iterrows():
+    for _, row in merged.iterrows():
 
-        for resource_id, probability in RESOURCE_PROBABILITIES.items():
+        enrollment_id = row["enrollment_id"]
+        mode = row["delivery_mode"]
 
-            if random.random() <= probability:
+        resources = []
 
-                allocations.append({
+        # Resources given to everyone
+        resources.extend([3, 7, 8])      # Manual, Mentorship, T-Shirt
 
-                    "allocation_id": allocation_id,
+        # Delivery-mode resources
+        if mode == "Online":
 
-                    "enrollment_id": enrollment["enrollment_id"],
+            resources.append(2)          # Internet Bundle
 
-                    "resource_id": resource_id,
+        elif mode == "Hybrid":
 
-                    "quantity": 1
+            resources.extend([
+                2,      # Internet
+                4       # Stationery
+            ])
 
-                })
+            if random.random() < 0.60:
+                resources.append(5)      # Meals
 
-                allocation_id += 1
+            if random.random() < 0.40:
+                resources.append(6)      # Transport
+
+        else:   # Physical
+
+            resources.extend([
+                4,      # Stationery
+                5       # Meals
+            ])
+
+            if random.random() < 0.80:
+                resources.append(6)      # Transport
+
+        # Laptop support (limited)
+        if random.random() < 0.25:
+            resources.append(1)
+
+        # Remove duplicates
+        resources = sorted(set(resources))
+
+        for resource_id in resources:
+
+            allocations.append({
+
+                "allocation_id": allocation_id,
+
+                "enrollment_id": enrollment_id,
+
+                "resource_id": resource_id,
+
+                "quantity": 1
+
+            })
+
+            allocation_id += 1
 
     df = pd.DataFrame(allocations)
 
     df.to_csv(
-
         DATA_DIR / "resource_allocations.csv",
-
         index=False
-
     )
 
     print(
-
-        f" resource_allocations.csv ({len(df)} records)"
-
+        f"✓ resource_allocations.csv ({len(df)} records)"
     )
 
     return df

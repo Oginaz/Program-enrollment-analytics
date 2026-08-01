@@ -3,7 +3,6 @@ COHORT GENERATOR
 """
 
 from datetime import datetime
-from pathlib import Path
 import random
 
 import pandas as pd
@@ -13,16 +12,39 @@ from config import (
     YEAR_CONFIGURATION,
     PROGRAMS,
     COUNTIES,
+    COUNTY_WEIGHTS,
     RANDOM_SEED
 )
 
 random.seed(RANDOM_SEED)
 
+PROGRAM_LOOKUP = {
+    p["program_id"]: p
+    for p in PROGRAMS
+}
 
-PROGRAM_LOOKUP = {}
 
-for p in PROGRAMS:
-    PROGRAM_LOOKUP[p["program_id"]] = p
+def weighted_county():
+
+    county_id = random.choices(
+
+        list(COUNTY_WEIGHTS.keys()),
+
+        weights=list(COUNTY_WEIGHTS.values()),
+
+        k=1
+
+    )[0]
+
+    return next(
+
+        county
+
+        for county in COUNTIES
+
+        if county["county_id"] == county_id
+
+    )
 
 
 def generate():
@@ -36,37 +58,56 @@ def generate():
         config = YEAR_CONFIGURATION[year]
 
         active_programs = [
-            p for p in PROGRAMS
+
+            p
+
+            for p in PROGRAMS
+
             if p["launch_year"] <= year
+
         ]
 
-        if len(active_programs) == 0:
+        if not active_programs:
             continue
 
         cohorts_per_program = max(
+
             1,
+
             config["cohorts"] // len(active_programs)
+
         )
 
         for program in active_programs:
 
             prefix = "".join(
+
                 word[0]
+
                 for word in program["program_name"].split()
+
             ).upper()
 
             for number in range(1, cohorts_per_program + 1):
 
-                county = random.choice(COUNTIES)
+                county = weighted_county()
 
                 start_date = datetime(
+
                     year,
+
                     random.randint(1, 10),
+
                     random.randint(1, 20)
+
                 )
 
+                end_month = min(start_date.month + 2, 12)
+
                 end_date = start_date.replace(
-                    month=min(start_date.month + 2, 12)
+
+                    month=end_month
+
                 )
 
                 cohorts.append({
@@ -76,6 +117,8 @@ def generate():
                     "program_id": program["program_id"],
 
                     "county_id": county["county_id"],
+
+                    "year": year,
 
                     "cohort_name": f"{prefix}-{year}-{number:02}",
 
@@ -94,10 +137,17 @@ def generate():
     df = pd.DataFrame(cohorts)
 
     df.to_csv(
+
         DATA_DIR / "cohorts.csv",
+
         index=False
+
     )
 
-    print(f"✓ cohorts.csv ({len(df)} records)")
+    print(
+
+        f"✓ cohorts.csv ({len(df)} records)"
+
+    )
 
     return df

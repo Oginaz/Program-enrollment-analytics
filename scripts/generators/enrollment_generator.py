@@ -1,8 +1,6 @@
 """
-==========================================================
 PWANI TEKNOWGALZ
 ENROLLMENT GENERATOR
-==========================================================
 """
 
 from datetime import timedelta
@@ -21,6 +19,10 @@ def generate():
         DATA_DIR / "applications.csv"
     )
 
+    cohorts = pd.read_csv(
+        DATA_DIR / "cohorts.csv"
+    )
+
     enrollments = []
 
     enrollment_id = 1
@@ -34,17 +36,27 @@ def generate():
             application["application_date"]
         )
 
-        enrollment_date = (
-            application_date
-            + timedelta(days=random.randint(7, 30))
+        cohort = cohorts[
+            cohorts["cohort_id"] == application["cohort_id"]
+        ].iloc[0]
+
+        start_date = pd.to_datetime(
+            cohort["start_date"]
+        )
+
+        enrollment_date = max(
+            application_date + timedelta(days=random.randint(3, 14)),
+            start_date
         )
 
         completion_probability = random.random()
 
-        if completion_probability <= 0.88:
+        if completion_probability <= 0.85:
             completion_status = "Completed"
+
         elif completion_probability <= 0.95:
             completion_status = "Ongoing"
+
         else:
             completion_status = "Withdrawn"
 
@@ -65,10 +77,17 @@ def generate():
     df = pd.DataFrame(enrollments)
 
     df.to_csv(
+
         DATA_DIR / "enrollments.csv",
+
         index=False
+
     )
 
-    print(f"✓ enrollments.csv ({len(df)} records)")
+    print(
+
+        f" enrollments.csv ({len(df)} records)"
+
+    )
 
     return df

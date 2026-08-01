@@ -1,49 +1,53 @@
 """
-==========================================================
 PWANI TEKNOWGALZ SYNTHETIC DATA GENERATOR
-==========================================================
 """
 
 from generators.lookup_generator import generate as lookup
-
 from generators.cohort_generator import generate as cohorts
-
 from generators.applicant_generator import generate as applicants
-
 from generators.application_generator import generate as applications
-
 from generators.enrollment_generator import generate as enrollments
-
 from generators.allocation_generator import generate as allocations
+
+import time
+
+
+def run_step(title, function):
+
+    print("\n" + "=" * 70)
+    print(title)
+    print("=" * 70)
+
+    start = time.time()
+
+    function()
+
+    elapsed = time.time() - start
+
+    print(f"Completed in {elapsed:.2f} seconds")
 
 
 def main():
 
-    print("="*70)
+    print("=" * 70)
     print("PWANI TEKNOWGALZ SYNTHETIC DATA GENERATOR")
-    print("="*70)
+    print("=" * 70)
 
-    print("\nSprint 1")
-    lookup()
+    run_step("SPRINT 1 - LOOKUP TABLES", lookup)
 
-    print("\nSprint 2")
-    cohorts()
+    run_step("SPRINT 2 - COHORTS", cohorts)
 
-    print("\nSprint 3")
-    applicants()
+    run_step("SPRINT 3 - APPLICANTS", applicants)
 
-    print("\nSprint 4")
-    applications()
+    run_step("SPRINT 4 - APPLICATIONS", applications)
 
-    print("\nSprint 5")
-    enrollments()
+    run_step("SPRINT 5 - ENROLLMENTS", enrollments)
 
-    print("\nSprint 6")
-    allocations()
+    run_step("SPRINT 6 - RESOURCE ALLOCATIONS", allocations)
 
-    print("\n" + "="*70)
-    print("DATASET GENERATION COMPLETED SUCCESSFULLY")
-    print("="*70)
+    print("\n" + "=" * 70)
+    print("ALL DATASETS GENERATED SUCCESSFULLY")
+    print("=" * 70)
 
 
 if __name__ == "__main__":

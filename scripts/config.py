@@ -35,6 +35,16 @@ COUNTIES = [
     {"county_id": 5, "county_name": "Lamu", "region": "Coast"},
     {"county_id": 6, "county_name": "Tana River", "region": "Coast"},
 ]
+COUNTY_WEIGHTS = {
+
+    1: 32,   # Mombasa
+    2: 26,   # Kilifi
+    3: 18,   # Kwale
+    4: 10,   # Taita Taveta
+    5: 8,    # Tana River
+    6: 6     # Lamu
+
+}
 
 # APPLICATION CHANNELS
 APPLICATION_CHANNELS = [
@@ -178,3 +188,94 @@ PROGRAMS = [
         "launch_year": 2021      # Assumption;named by org, year unverified
     },
 ]
+
+PROGRAM_DISTRIBUTION = {
+
+    2015:{1:100},
+
+    2016:{
+        1:90,
+        2:10
+    },
+
+    2017:{
+        1:70,
+        2:20,
+        3:10
+    },
+
+    2018:{
+        1:55,
+        2:20,
+        3:15,
+        4:10
+    },
+
+    2019:{
+        1:45,
+        2:20,
+        3:20,
+        4:15
+    },
+
+    2020:{
+        5:100
+    },
+
+    2021:{
+        5:80,
+        6:20
+    },
+
+    2022:{
+        5:70,
+        6:15,
+        7:15
+    },
+
+    2023:{
+        5:65,
+        6:20,
+        7:15
+    },
+
+    2024:{
+        5:60,
+        6:20,
+        7:20
+    },
+
+    2025:{
+        5:60,
+        6:20,
+        7:20
+    },
+
+    2026:{
+        5:55,
+        6:20,
+        7:25
+    }
+
+}
+
+
+YEAR_CONFIGURATION = {
+
+    2015: {"applications":120,  "cohorts":2,  "capacity_per_cohort":15,  "delivery":"Physical"},
+    2016: {"applications":180,  "cohorts":3,  "capacity_per_cohort":18,  "delivery":"Physical"},
+    2017: {"applications":300,  "cohorts":4,  "capacity_per_cohort":22,  "delivery":"Physical"},
+    2018: {"applications":450,  "cohorts":5,  "capacity_per_cohort":28,  "delivery":"Physical"},
+    2019: {"applications":700,  "cohorts":6,  "capacity_per_cohort":35,  "delivery":"Physical"},
+
+    2020: {"applications":1350, "cohorts":12, "capacity_per_cohort":22,  "delivery":"Online"},
+
+    2021: {"applications":1100, "cohorts":10, "capacity_per_cohort":24,  "delivery":"Hybrid"},
+
+    2022: {"applications":1700, "cohorts":12, "capacity_per_cohort":32,  "delivery":"Hybrid"},
+    2023: {"applications":2700, "cohorts":14, "capacity_per_cohort":40,  "delivery":"Hybrid"},
+    2024: {"applications":3500, "cohorts":16, "capacity_per_cohort":52,  "delivery":"Physical"},
+    2025: {"applications":3900, "cohorts":18, "capacity_per_cohort":60,  "delivery":"Physical"},
+    2026: {"applications":4543, "cohorts":20, "capacity_per_cohort":70,  "delivery":"Physical"}
+
+}
