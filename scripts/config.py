@@ -86,106 +86,48 @@ RESOURCES = [
 
 
 # PROGRAMS
-
 PROGRAMS = [
-    # launch year confirmed from organisation history
     {
         "program_id": 1,
         "program_name": "Technovation Challenge",
         "description": "Technovation Challenge programme",
-        "launch_year": 2015      # Verified;Ruth Kaveke: "launched in 2015, Mombasa region"
+        "launch_year": 2015      # Verified — Ruth Kaveke: "launched in 2015, Mombasa region"
     },
     {
         "program_id": 2,
         "program_name": "Mombasa Girls in STEM",
         "description": "TechWomen Kenya alumnae partnership project",
-        "launch_year": 2016      # Verified;Phase 1 2016, Phase 2 2018
+        "launch_year": 2016      # Verified — Phase 1 2016, Phase 2 2018
     },
     {
         "program_id": 3,
         "program_name": "Django Girls Mombasa",
         "description": "Django Girls workshops",
-        "launch_year": 2017      # Verified;first workshop, February 2017
+        "launch_year": 2017      # Verified — first workshop, February 2017
     },
     {
         "program_id": 4,
         "program_name": "STEM Cafe Kenya",
         "description": "Multi-region STEM outreach programme",
-        "launch_year": 2019      # Verified;target of 135 across 5 regions
+        "launch_year": 2019      # Verified — target of 135 across 5 regions
     },
     {
         "program_id": 5,
         "program_name": "CodeHack",
         "description": "CodeHack programme",
-        "launch_year": 2020      # Verified;first cohort was the "COVID-19 Edition"
+        "launch_year": 2020      # Verified — first cohort was the "COVID-19 Edition"
     },
     {
         "program_id": 6,
         "program_name": "AjiraForShe",
         "description": "AjiraForShe apprenticeship programme",
-        "launch_year": 2024      # Verified active by mid-2024 exact launch year not confirmed
+        "launch_year": 2024      # Verified active by mid-2024 — exact launch year not confirmed
     },
     {
         "program_id": 7,
         "program_name": "CodeHack Women in Tech Accelerator",
         "description": "Advanced CodeHack track: AI/ML, Cybersecurity, Data Science, Flutter, Backend",
-        "launch_year": 2025      # Verified;launched July 2025
-    },
-
-    # --- Named by the organisation, but launch year not confirmed (assumption) ---
-    {
-        "program_id": 8,
-        "program_name": "Africa Code Week",
-        "description": "Africa Code Week teachers training activities",
-        "launch_year": 2017      # Assumption;Ruth confirmed as Kenya Ambassador, year unverified
-    },
-    {
-        "program_id": 9,
-        "program_name": "Coders at American Spaces",
-        "description": "Coding sessions in partnership with American Spaces Kenya",
-        "launch_year": 2021      # Assumption;named by org, year unverified
-    },
-    {
-        "program_id": 10,
-        "program_name": "3D Design & Printing",
-        "description": "3D design and printing skills training",
-        "launch_year": 2021      # Assumption;named by org, year unverified
-    },
-    {
-        "program_id": 11,
-        "program_name": "STEM Conference",
-        "description": "STEM conference event",
-        "launch_year": 2021      # Assumption;named by org, year unverified
-    },
-    {
-        "program_id": 12,
-        "program_name": "Tech Camp Nairobi",
-        "description": "Nairobi-based tech camp",
-        "launch_year": 2021      # Assumption;named by org, year unverified
-    },
-    {
-        "program_id": 13,
-        "program_name": "Girls Learn Through Technology",
-        "description": "Girls Learn Through Technology programme",
-        "launch_year": 2021      # Assumption;named by org, year unverified
-    },
-    {
-        "program_id": 14,
-        "program_name": "Eskills for Girls Workshop",
-        "description": "Eskills for Girls Workshop, supported by #eskills4girls",
-        "launch_year": 2021      # Assumption;named by org, year unverified
-    },
-    {
-        "program_id": 15,
-        "program_name": "Community Workshop",
-        "description": "General community coding workshops",
-        "launch_year": 2021      # Assumption;named by org, year unverified
-    },
-    {
-        "program_id": 16,
-        "program_name": "Flutter Mobile Development Sessions",
-        "description": "Flutter mobile app development training sessions",
-        "launch_year": 2021      # Assumption;named by org, year unverified
+        "launch_year": 2025      # Verified — launched July 2025
     },
 ]
 
@@ -270,10 +212,10 @@ YEAR_CONFIGURATION = {
 
     2020: {"applications":1350, "cohorts":12, "capacity_per_cohort":22,  "delivery":"Online"},
 
-    2021: {"applications":1100, "cohorts":10, "capacity_per_cohort":24,  "delivery":"Hybrid"},
+    2021: {"applications":1100, "cohorts":10, "capacity_per_cohort":24,  "delivery":"Physical"},
 
-    2022: {"applications":1700, "cohorts":12, "capacity_per_cohort":32,  "delivery":"Hybrid"},
-    2023: {"applications":2700, "cohorts":14, "capacity_per_cohort":40,  "delivery":"Hybrid"},
+    2022: {"applications":1700, "cohorts":12, "capacity_per_cohort":32,  "delivery":"Physical"},
+    2023: {"applications":2700, "cohorts":14, "capacity_per_cohort":40,  "delivery":"Physical"},
     2024: {"applications":3500, "cohorts":16, "capacity_per_cohort":52,  "delivery":"Physical"},
     2025: {"applications":3900, "cohorts":18, "capacity_per_cohort":60,  "delivery":"Physical"},
     2026: {"applications":4543, "cohorts":20, "capacity_per_cohort":70,  "delivery":"Physical"}
