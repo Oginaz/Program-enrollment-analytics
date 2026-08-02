@@ -146,7 +146,7 @@ def generate():
 
             email = (
                 first_name.lower()
-                + "."
+                #+ "."
                 + last_name.lower()
                 + str(random.randint(100, 999))
                 + "@gmail.com"
