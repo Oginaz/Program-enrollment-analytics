@@ -53,11 +53,11 @@ CREATE TABLE applicants (
     education_level   VARCHAR(100),
     income_level      VARCHAR(50),
     device_ownership  BOOLEAN,
-    channel_id        INT,
+    phone_number      VARCHAR(20),
+    email             VARCHAR(100),
     program_id        INT,
     registered_at     DATE,
     FOREIGN KEY (county_id)  REFERENCES counties(county_id),
-    FOREIGN KEY (channel_id) REFERENCES application_channels(channel_id),
     FOREIGN KEY (program_id) REFERENCES programs(program_id)
 );
 
@@ -80,6 +80,7 @@ CREATE TABLE applications (
     application_id      INT AUTO_INCREMENT PRIMARY KEY,
     applicant_id        INT NOT NULL,
     cohort_id           INT NOT NULL,
+    channel_id          INT,
     application_date    DATE,
     stage               VARCHAR(30),   -- applied / screened / interviewed / offered / rejected
     eligibility_status  VARCHAR(30),
@@ -89,6 +90,7 @@ CREATE TABLE applications (
     exit_date           DATE,
     FOREIGN KEY (applicant_id)   REFERENCES applicants(applicant_id),
     FOREIGN KEY (cohort_id)      REFERENCES cohorts(cohort_id),
+    FOREIGN KEY (channel_id)     REFERENCES application_channels(channel_id),
     FOREIGN KEY (exit_reason_id) REFERENCES exit_reasons(exit_reason_id)
 );
 
@@ -97,9 +99,6 @@ CREATE TABLE enrollments (
     enrollment_id      INT AUTO_INCREMENT PRIMARY KEY,
     application_id     INT NOT NULL UNIQUE,
     enrollment_date    DATE,
-    retained_30_day    BOOLEAN,
-    retained_90_day    BOOLEAN,
-    retained_180_day   BOOLEAN,
     completion_status  VARCHAR(30),
     completion_date    DATE,
     FOREIGN KEY (application_id) REFERENCES applications(application_id)
@@ -115,4 +114,14 @@ CREATE TABLE resource_allocations (
     allocation_date     DATE,
     FOREIGN KEY (cohort_id)   REFERENCES cohorts(cohort_id),
     FOREIGN KEY (resource_id) REFERENCES resources(resource_id)
+);
+
+-- 11. Participant resources (linking enrollments to resources)
+CREATE TABLE participant_resources (
+    participant_resource_id     INT AUTO_INCREMENT PRIMARY KEY,
+    enrollment_id               INT NOT NULL,
+    resource_id                 INT NOT NULL,
+    quantity                    INT DEFAULT 1,
+    FOREIGN KEY (enrollment_id) REFERENCES enrollments(enrollment_id),
+    FOREIGN KEY (resource_id)   REFERENCES resources(resource_id)
 );
