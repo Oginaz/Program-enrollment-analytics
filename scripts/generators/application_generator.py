@@ -28,6 +28,8 @@ CHANNEL_WEIGHTS = [
 
 DOCUMENT_EXIT_REASONS = [1, 2, 3, 4]
 INTERVIEW_EXIT_REASONS = [6, 7]
+CAPACITY_EXIT_REASON = 5
+
 YEAR_TARGET_RATE = {
 
     2015: 0.28,
@@ -38,7 +40,7 @@ YEAR_TARGET_RATE = {
 
     2020: 0.18,
 
-    2021: 0.16,
+    2021: 0.13,
 
     2022: 0.15,
     2023: 0.15,
@@ -47,6 +49,7 @@ YEAR_TARGET_RATE = {
     2026: 0.15
 
 }
+
 
 def random_channel():
     return random.choices(
@@ -73,9 +76,7 @@ def generate():
     }
 
     applications = []
-
     application_id = 1
-
     yearly_enrolled = {year: 0 for year in YEAR_TARGET_RATE}
 
     for _, applicant in applicants.iterrows():
@@ -84,136 +85,129 @@ def generate():
             applicant.registered_at
         ).year
 
-        year_target = int(YEAR_CONFIGURATION[application_year]["applications"] * YEAR_TARGET_RATE[application_year])
+        application_date = pd.to_datetime(
+            applicant.registered_at
+        )
+
+        year_target = int(
+            YEAR_CONFIGURATION[application_year]["applications"]
+            * YEAR_TARGET_RATE[application_year]
+        )
 
         eligible_cohorts = cohorts[
             (cohorts.program_id == applicant.program_id)
-            &
-            (cohorts.year == application_year)
+            & (cohorts.year == application_year)
         ]
 
+        # --- Case 1: no cohort exists at all for this program/year ---
+        # Record the applicant as rejected instead of dropping them silently.
         if len(eligible_cohorts) == 0:
+
+            applications.append({
+                "application_id": application_id,
+                "applicant_id": applicant.applicant_id,
+                "cohort_id": None,
+                "channel_id": random_channel()["channel_id"],
+                "application_date": application_date,
+                "eligibility_status": "Not Eligible",
+                "interview_result": "Not Interviewed",
+                "offer_status": "Not Offered",
+                "application_status": "Rejected",
+                "stage": "Eligibility",
+                "exit_reason_id": CAPACITY_EXIT_REASON,
+            })
+
+            application_id += 1
             continue
 
-        available = eligible_cohorts[eligible_cohorts.cohort_id.map(remaining_capacity) > 0]
+        available = eligible_cohorts[
+            eligible_cohorts.cohort_id.map(remaining_capacity) > 0
+        ]
 
+        # --- Case 2: cohorts exist but all are already full ---
+        # Record the applicant as rejected instead of dropping them silently.
         if len(available) == 0:
+
+            applications.append({
+                "application_id": application_id,
+                "applicant_id": applicant.applicant_id,
+                "cohort_id": eligible_cohorts.iloc[0].cohort_id,
+                "channel_id": random_channel()["channel_id"],
+                "application_date": application_date,
+                "eligibility_status": "Eligible",
+                "interview_result": "Not Interviewed",
+                "offer_status": "Not Offered",
+                "application_status": "Rejected",
+                "stage": "Selection",
+                "exit_reason_id": CAPACITY_EXIT_REASON,
+            })
+
+            application_id += 1
             continue
+
         selected_cohort = available.sample(1).iloc[0]
 
         eligible = random.random() < 0.97
 
-        interviewed = False
-
-        interview_pass = False
-
-        enrolled = False
-
         stage = "Eligibility"
-
         status = "Rejected"
-
         exit_reason = None
-
         interview_result = "Not Interviewed"
-
         offer_status = "Not Offered"
 
         # Eligibility
         if not eligible:
 
             stage = "Eligibility"
-
-            exit_reason = random.choice(
-                DOCUMENT_EXIT_REASONS
-            )
+            exit_reason = random.choice(DOCUMENT_EXIT_REASONS)
 
         else:
 
-            interviewed = True
-
             stage = "Interview"
-
-            interview_pass = (
-                random.random() < 0.85
-            )
+            interview_pass = random.random() < 0.85
 
             if interview_pass:
-
                 interview_result = "Passed"
-
             else:
-
                 interview_result = "Failed"
 
             # Interview Failed
             if not interview_pass:
 
-                exit_reason = random.choice(
-                    INTERVIEW_EXIT_REASONS
-                )
+                exit_reason = random.choice(INTERVIEW_EXIT_REASONS)
 
             else:
 
                 offer_status = "Offered"
-
                 stage = "Selection"
 
-           
-                # Capacity Check
+                # Capacity check against this year's target
                 if (
-                    yearly_enrolled[application_year] < year_target and remaining_capacity[selected_cohort.cohort_id] > 0 ):
+                    yearly_enrolled[application_year] < year_target
+                    and remaining_capacity[selected_cohort.cohort_id] > 0
+                ):
 
                     status = "Enrolled"
-
-                    enrolled = True
-
                     yearly_enrolled[application_year] += 1
-
-                    remaining_capacity[
-                        selected_cohort.cohort_id
-                    ] -= 1
+                    remaining_capacity[selected_cohort.cohort_id] -= 1
 
                 else:
 
                     status = "Rejected"
-
-                    exit_reason = 5
-
-        application_date = pd.to_datetime(
-            applicant.registered_at
-        )
+                    exit_reason = CAPACITY_EXIT_REASON
 
         applications.append({
-
             "application_id": application_id,
-
             "applicant_id": applicant.applicant_id,
-
             "cohort_id": selected_cohort.cohort_id,
-
             "channel_id": random_channel()["channel_id"],
-
             "application_date": application_date,
-
-            "eligibility_status":
-                "Eligible" if eligible else "Not Eligible",
-
-            "interview_result":
-                interview_result,
-
-            "offer_status":
-                offer_status,
-
-            "application_status":
-                status,
-
-            "stage":
-                stage,
-
-            "exit_reason_id":
-                exit_reason
-
+            "eligibility_status": "Eligible" if eligible else "Not Eligible",
+            "interview_result": interview_result,
+            "offer_status": offer_status,
+            "application_status": status,
+            "stage": stage,
+            "exit_reason_id": exit_reason
         })
 
         application_id += 1
@@ -226,7 +220,7 @@ def generate():
     )
 
     print(
-        f" applications.csv ({len(df)} records)"
+        f"✓ applications.csv ({len(df)} records)"
     )
 
     print("\nEnrollment Summary")
@@ -234,11 +228,10 @@ def generate():
     total = 0
 
     for year in sorted(yearly_enrolled):
-        print(
-        f"{year}: {yearly_enrolled[year]}")
-
+        print(f"{year}: {yearly_enrolled[year]}")
         total += yearly_enrolled[year]
 
     print(f"\nTOTAL ENROLLED = {total}")
+    print(f"OVERALL RATE = {total / len(applicants):.1%}")
 
     return df
