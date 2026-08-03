@@ -8,7 +8,11 @@ venv/
 .venv/
 env/
 
-# jupyter notebook
+# Jupyter
 .ipynb_checkpoints/
+
+notebooks/
+
+*.ipynb
 
 # distribution / packaging
