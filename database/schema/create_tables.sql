@@ -20,8 +20,8 @@ CREATE TABLE application_channels (
 -- 3. Lookup: exit reasons
 CREATE TABLE exit_reasons (
     exit_reason_id      INT AUTO_INCREMENT PRIMARY KEY,
-    reason_description  VARCHAR(150) NOT NULL,
-    funnel_stage        VARCHAR(50)
+    reason              VARCHAR(150) NOT NULL,
+    stage               VARCHAR(50)
 );
 
 -- 4. Catalog: resources
@@ -88,6 +88,7 @@ CREATE TABLE applications (
     offer_status        VARCHAR(30),
     exit_reason_id      INT,
     exit_date           DATE,
+    application_status VARCHAR(20) NOT NULL,
     FOREIGN KEY (applicant_id)   REFERENCES applicants(applicant_id),
     FOREIGN KEY (cohort_id)      REFERENCES cohorts(cohort_id),
     FOREIGN KEY (channel_id)     REFERENCES application_channels(channel_id),
