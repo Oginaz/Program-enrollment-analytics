@@ -72,18 +72,16 @@ EXIT_REASONS = [
     {"exit_reason_id": 10, "stage": "Enrollment", "reason": "Withdrew voluntarily"},
 ]
 
-# RESOURCES
 RESOURCES = [
-    {"resource_id": 1, "resource_name": "Laptop", "description": "Laptop issued to participant"},
-    {"resource_id": 2, "resource_name": "Internet Bundle", "description": "Internet connectivity support"},
-    {"resource_id": 3, "resource_name": "Training Manual", "description": "Training manual"},
-    {"resource_id": 4, "resource_name": "Stationery", "description": "Training stationery"},
-    {"resource_id": 5, "resource_name": "Meals", "description": "Meals during training"},
-    {"resource_id": 6, "resource_name": "Transport Support", "description": "Transport facilitation"},
-    {"resource_id": 7, "resource_name": "Mentorship", "description": "Mentorship support"},
-    {"resource_id": 8, "resource_name": "Branded T-Shirt", "description": "Official programme T-shirt"},
+    {"resource_id": 1, "resource_name": "Laptop", "unit_cost": 25000.00, "description": "Laptop issued to participant"},
+    {"resource_id": 2, "resource_name": "Internet Bundle", "unit_cost": 3000.00, "description": "Internet connectivity support"},
+    {"resource_id": 3, "resource_name": "Training Manual", "unit_cost": 500.00, "description": "Training manual"},
+    {"resource_id": 4, "resource_name": "Stationery", "unit_cost": 300.00, "description": "Training stationery"},
+    {"resource_id": 5, "resource_name": "Meals", "unit_cost": 4800.00, "description": "Meals during training"},
+    {"resource_id": 6, "resource_name": "Transport Support", "unit_cost": 3600.00, "description": "Transport facilitation"},
+    {"resource_id": 7, "resource_name": "Mentorship", "unit_cost": 2000.00, "description": "Mentorship support"},
+    {"resource_id": 8, "resource_name": "Branded T-Shirt", "unit_cost": 700.00, "description": "Official programme T-shirt"},
 ]
-
 
 # PROGRAMS
 PROGRAMS = [
