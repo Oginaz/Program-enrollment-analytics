@@ -1,9 +1,9 @@
-resource_id,resource_name,description
-1,Laptop,Laptop issued to participant
-2,Internet Bundle,Internet connectivity support
-3,Training Manual,Training manual
-4,Stationery,Training stationery
-5,Meals,Meals during training
-6,Transport Support,Transport facilitation
-7,Mentorship,Mentorship support
-8,Branded T-Shirt,Official programme T-shirt
+resource_id,resource_name,unit_cost,description
+1,Laptop,25000.0,Laptop issued to participant
+2,Internet Bundle,3000.0,Internet connectivity support
+3,Training Manual,500.0,Training manual
+4,Stationery,300.0,Training stationery
+5,Meals,4800.0,Meals during training
+6,Transport Support,3600.0,Transport facilitation
+7,Mentorship,2000.0,Mentorship support
+8,Branded T-Shirt,700.0,Official programme T-shirt
