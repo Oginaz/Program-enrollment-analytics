@@ -27,8 +27,8 @@ RESOURCE_RULES = {
 
 def generate():
     """
-    Per-cohort resource allocation — the CAPACITY CONSTRAINT signal.
-    Answers: did this cohort have enough of resource X to meet its capacity?
+    Per-cohort resource allocation  the CAPACITY CONSTRAINT signal.
+    Answers: did this cohort have enough of resource  to meet its capacity?
     Exists independent of who actually enrolled.
     """
 
