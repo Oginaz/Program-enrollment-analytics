@@ -169,10 +169,10 @@ def generate():
                     INCOME_LEVELS,
                     weights=[45, 30, 18, 7]   # skewed low, matching marginalized-community target population
                 )[0],
-                "device_ownership": random.choices(
+                "device_ownership": int(random.choices(
                     [True, False],
-                    weights=[45, 55]           # device access is a known constraint per Close the Gap partnership research
-                )[0],
+                    weights=[45, 55]
+                )[0]),
                 "program_id": program["program_id"],
                 "registered_at": datetime(
                     year,
