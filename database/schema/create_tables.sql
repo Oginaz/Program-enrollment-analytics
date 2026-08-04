@@ -26,69 +26,67 @@ CREATE TABLE exit_reasons (
 
 -- 4. Catalog: resources
 CREATE TABLE resources (
-    resource_id        INT AUTO_INCREMENT PRIMARY KEY,
-    resource_name      VARCHAR(100) NOT NULL,
-    resource_category  VARCHAR(50),
-    unit_cost          DECIMAL(10,2),
-    description        VARCHAR(255)
+    resource_id     INT AUTO_INCREMENT PRIMARY KEY,
+    resource_name   VARCHAR(100) NOT NULL,
+    unit_cost       DECIMAL(10,2),
+    description     VARCHAR(255)
 );
 
 -- 5. Programs catalog
 CREATE TABLE programs (
-    program_id            INT AUTO_INCREMENT PRIMARY KEY,
-    program_name          VARCHAR(150) NOT NULL,
-    skill_area            VARCHAR(100),
-    duration_months       INT,
-    delivery_mode         VARCHAR(20) DEFAULT 'physical',  
-    cost_per_participant  DECIMAL(10,2)
+    program_id     INT AUTO_INCREMENT PRIMARY KEY,
+    program_name   VARCHAR(150) NOT NULL,
+    description    VARCHAR(255),
+    launch_year    INT
 );
 
 -- 6. Applicants
 CREATE TABLE applicants (
-    applicant_id      INT AUTO_INCREMENT PRIMARY KEY,
-    full_name         VARCHAR(150) NOT NULL,
-    gender            VARCHAR(20) DEFAULT 'female',
-    dob               DATE,
-    county_id         INT,
-    education_level   VARCHAR(100),
-    income_level      VARCHAR(50),
-    device_ownership  BOOLEAN,
-    phone_number      VARCHAR(20),
-    email             VARCHAR(100),
-    program_id        INT,
-    registered_at     DATE,
+    applicant_id       INT AUTO_INCREMENT PRIMARY KEY,
+    first_name         VARCHAR(75) NOT NULL,
+    last_name          VARCHAR(75) NOT NULL,
+    gender             VARCHAR(20) DEFAULT 'female',
+    date_of_birth      DATE,
+    county_id          INT,
+    education_level    VARCHAR(100),
+    income_level       VARCHAR(50),
+    device_ownership   BOOLEAN,
+    phone_number       VARCHAR(20),
+    email              VARCHAR(100),
+    program_id         INT,
+    registered_at      DATE,
     FOREIGN KEY (county_id)  REFERENCES counties(county_id),
     FOREIGN KEY (program_id) REFERENCES programs(program_id)
 );
 
--- 7. Cohorts 
+-- 7. Cohorts
 CREATE TABLE cohorts (
     cohort_id       INT AUTO_INCREMENT PRIMARY KEY,
     program_id      INT NOT NULL,
     county_id       INT NOT NULL,
+    year            INT,
     cohort_name     VARCHAR(150),
+    capacity        INT,
+    delivery_mode   VARCHAR(20) DEFAULT 'physical',
     start_date      DATE,
     end_date        DATE,
-    capacity        INT,
-    funding_source  VARCHAR(150),
     FOREIGN KEY (program_id) REFERENCES programs(program_id),
     FOREIGN KEY (county_id)  REFERENCES counties(county_id)
 );
 
 -- 8. Applications (funnel backbone)
 CREATE TABLE applications (
-    application_id      INT AUTO_INCREMENT PRIMARY KEY,
-    applicant_id        INT NOT NULL,
-    cohort_id           INT NOT NULL,
-    channel_id          INT,
-    application_date    DATE,
-    stage               VARCHAR(30),   -- applied / screened / interviewed / offered / rejected
-    eligibility_status  VARCHAR(30),
-    interview_result    VARCHAR(30),
-    offer_status        VARCHAR(30),
-    exit_reason_id      INT,
-    exit_date           DATE,
-    application_status VARCHAR(20) NOT NULL,
+    application_id        INT AUTO_INCREMENT PRIMARY KEY,
+    applicant_id          INT NOT NULL,
+    cohort_id             INT,
+    channel_id            INT,
+    application_date      DATE,
+    stage                 VARCHAR(30),
+    eligibility_status    VARCHAR(30),
+    interview_result      VARCHAR(30),
+    offer_status          VARCHAR(30),
+    application_status    VARCHAR(30),
+    exit_reason_id        INT,
     FOREIGN KEY (applicant_id)   REFERENCES applicants(applicant_id),
     FOREIGN KEY (cohort_id)      REFERENCES cohorts(cohort_id),
     FOREIGN KEY (channel_id)     REFERENCES application_channels(channel_id),
