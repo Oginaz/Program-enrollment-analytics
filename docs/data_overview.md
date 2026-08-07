@@ -22,9 +22,9 @@ This document explains what each table in the dataset contains, how the syntheti
 | Metric | Value |
 |---|---|
 | Total applicants | 20,543 |
-| Total applications | 20,543 (one per applicant — no drops) |
+| Total applications | 20,543 (one per applicant  no drops) |
 | Total enrollments | 3,224 |
-| Overall enrollment rate | ~15.7% |
+| Overall enrollment rate | 15.7% |
 | Time span | 2015–2026 (partial year, through July) |
 | Total cohorts | 126 |
 | Programs modeled | 7 |
@@ -155,7 +155,7 @@ This document explains what each table in the dataset contains, how the syntheti
 | 2024 | 3,500 | 525 | 15% | Matches the brief's stated current baseline |
 | 2025 | 3,900 | 585 | 15% | KPI/funnel-improvement initiative begins (this project) |
 | 2026 (Jan–Jul, partial) | 4,543 | 681 | 15% | Continued, still well short of the 50% target |
-| **Total** | **20,543** | **3,224** | **~15.7%** | |
+| **Total** | **20,543** | **3,224** | **15.7%** | |
 
 ---
 
@@ -170,7 +170,7 @@ The dataset is calibrated against the original brief's target funnel shape:
 
 This cascade (60% eligible → 50% interviewed → 50% enrolled = 15% overall) came directly from the funnel graphic in the organization's official project brief, and is the authoritative target the yearly rates in `config.py` (`YEAR_TARGET_RATE`) are tuned against. The actual generated dataset lands at 20,543 → 3,224 (15.7%), closely matching this target.
 
-**Note on the "6,800" figure:** earlier drafts of the brief (and the organization's own website) reference "impacted 6,800 young women... representing 15% of the applicant pool" — this is mathematically inconsistent (6,800/20,000 = 34%, not 15%) and appears to be a persistent copy-paste error traced across multiple independent sources, including the org's own blog. The funnel graphic's **3,000 / 15%** figure was treated as authoritative instead, since it's internally consistent and matches the brief's stated current-state baseline.
+**Note on the "6,800" figure:** earlier drafts of the brief (and the organization's own website) reference "impacted 6,800 young women... representing 15% of the applicant pool" this is mathematically inconsistent (6,800/20,000 = 34%, not 15%) and appears to be a persistent copy-paste error traced across multiple independent sources, including the org's own blog. The funnel graphic's **3,000 / 15%** figure was treated as authoritative instead, since it's internally consistent and matches the brief's stated current-state baseline.
 
 ---
 
@@ -179,7 +179,7 @@ This cascade (60% eligible → 50% interviewed → 50% enrolled = 15% overall) c
 | Program | Launch Year | Confidence |
 |---|---|---|
 | Technovation Challenge | 2015 | Verified — Ruth Kaveke: "launched in 2015, Mombasa region" |
-| Mombasa Girls in STEM | 2016 | Verified — Phase 1 ~2016, Phase 2 ~2018 |
+| Mombasa Girls in STEM | 2016 | Verified — Phase 1 ~2016, Phase 2 2018 |
 | Django Girls Mombasa | 2017 | Verified — first workshop, February 2017 |
 | STEM Cafe Kenya | 2019 | Verified — target of 135 participants across 5 regions |
 | CodeHack | 2020 | Verified — first cohort was the "COVID-19 Edition" |
@@ -202,16 +202,16 @@ All costs represent the **full 3-month cohort cost per participant** (not a mont
 
 | Resource | Unit Cost (KES) | Notes |
 |---|---|---|
-| Laptop | 25,000 | One-time; ~25% of enrolled participants receive one |
-| Internet Bundle | 4,500 | ~1,500/month × 3 months; Online/Hybrid cohorts only |
+| Laptop | 25,000 | One-time; 25% of enrolled participants receive one |
+| Internet Bundle | 3,000 | 1,000/month × 3 months; Online cohorts only |
 | Training Manual | 500 | One-time issuance |
 | Stationery | 300 | One-time kit |
-| Meals | 4,800 | ~24 sessions × ~200 KES |
-| Transport Support | 3,600 | ~24 sessions × ~150 KES |
+| Meals | 4,800 | 24 sessions × 200 KES |
+| Transport Support | 3,600 | 24 sessions × 150 KES |
 | Mentorship | 2,000 | Flat, program-long |
 | Branded T-Shirt | 700 | One-time |
 
-**Sanity check:** a full physical-delivery participant's typical resource cost (Manual + Stationery + Meals + Transport + Mentorship + T-Shirt ≈ KES 11,900, or ~36,900 if they also receive a laptop) brackets reasonably around the verified **KES 30,000 CodeHack subsidy per participant**, supporting these as defensible estimates rather than arbitrary numbers.
+**Sanity check:** a full physical-delivery participant's typical resource cost (Manual + Stationery + Meals + Transport + Mentorship + T-Shirt ≈ KES 11,900, or 36,900 if they also receive a laptop) brackets reasonably around the verified **KES 30,000 CodeHack subsidy per participant**, supporting these as defensible estimates rather than arbitrary numbers.
 
 ---
 
