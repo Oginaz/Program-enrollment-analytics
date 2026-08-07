@@ -109,7 +109,7 @@ The database is built on a normalized relational schema modeling the complete ap
 
 **Operational tables:** `cohorts`, `applicants`, `applications`, `enrollments`, `resource_allocations`, `participant_resources`
 
-`resource_allocations` and `participant_resources` are deliberately separate: the former is a **per-cohort capacity constraint signal** (did this cohort have enough of a resource to meet demand), while the latter is a **per-participant impact record** (what a specific enrolled participant actually received). See `docs/data_overview.md` for full field-level definitions.
+`resource_allocations` and `participant_resources` are deliberately separate: the former is a **per-cohort capacity constraint signal** (did this cohort have enough of a resource to meet demand), while the latter is a **per-participant impact record** (what a specific enrolled participant actually received).See [docs/data_overview.md](docs/data_overview.md) for full field-level definitions.
 
 ---
 
@@ -147,7 +147,7 @@ allocation_generator.py    (resource_allocations + participant_resources)
 
 - Python 3.10 or later
 - Git
-- MySQL Server 8.0+ and MySQL Workbench (for database import  see `docs/mysql.md`)
+- MySQL Server 8.0+ and MySQL Workbench (for database import see [docs/mysql.md](docs/mysql.md))
 - Power BI Desktop (for dashboard visualization)
 
 ### Clone the repository
@@ -210,7 +210,7 @@ counties → application_channels → exit_reasons → resources → programs
 
 ## Data Generation Philosophy
 
-This project uses **synthetic data**, not real participant information. The organization did not share real applicant records, so all figures are modeled from publicly available research (the organization's website, LinkedIn, and media coverage) rather than actual historical data. See `docs/data_overview.md` for the full reasoning behind yearly applicant volumes, funnel conversion rates, and program timelines.
+This project uses **synthetic data**, not real participant information. The organization did not share real applicant records, so all figures are modeled from publicly available research (the organization's website, LinkedIn, and media coverage) rather than actual historical data. See [docs/data_overview.md](docs/data_overview.md)for the full reasoning behind yearly applicant volumes, funnel conversion rates, and program timelines.
 
 The generated data is designed to:
 - Preserve relational integrity
@@ -229,7 +229,7 @@ The project uses a fixed random seed (`RANDOM_SEED = 42` in `config.py`), so run
 
 ## Key Project Assumptions
 
-Full reasoning is documented in `docs/project_brief.md` (Assumptions & Risks) and `docs/data_overview.md`. Highlights:
+Full reasoning is documented in [docs/project_brief.md](docs/project_brief.md) (Assumptions & Risks) and [docs/data_overview.md](docs/data_overview.md). Highlights:
 
 - Programs are introduced progressively, matching verified launch years where evidence exists (e.g. CodeHack launched 2020); unverified programs are explicitly flagged as assumptions, not invented
 - Each applicant submits a single application per cohort cycle
@@ -243,7 +243,7 @@ Full reasoning is documented in `docs/project_brief.md` (Assumptions & Risks) an
 
 ## A Note on Data Integrity
 
-During development, a cohort-allocation bug caused **94% of applicants to be silently dropped** from the dataset with no application record at all despite the pipeline running without any errors. This was only caught by explicitly verifying row counts (`applicants.csv` vs. `applications.csv`), traced to its root cause (cohort capacity being split evenly across all active programs instead of proportionally to expected demand), and fixed. Full details are in the repo's commit history and `docs/mysql.md`.
+During development, a cohort-allocation bug caused **94% of applicants to be silently dropped** from the dataset with no application record at all despite the pipeline running without any errors. This was only caught by explicitly verifying row counts (`applicants.csv` vs. `applications.csv`), traced to its root cause (cohort capacity being split evenly across all active programs instead of proportionally to expected demand), and fixed. Full details are in the repo's commit history and [docs/mysql.md](docs/mysql.md).
 
 This is called out deliberately: a pipeline completing without errors is not proof its output is correct.
 
