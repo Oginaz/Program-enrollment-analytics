@@ -243,7 +243,7 @@ Full reasoning is documented in `docs/project_brief.md` (Assumptions & Risks) an
 
 ## A Note on Data Integrity
 
-During development, a cohort-allocation bug caused **94% of applicants to be silently dropped** from the dataset with no application record at all — despite the pipeline running without any errors. This was only caught by explicitly verifying row counts (`applicants.csv` vs. `applications.csv`), traced to its root cause (cohort capacity being split evenly across all active programs instead of proportionally to expected demand), and fixed. Full details are in the repo's commit history and `docs/mysql.md`.
+During development, a cohort-allocation bug caused **94% of applicants to be silently dropped** from the dataset with no application record at all despite the pipeline running without any errors. This was only caught by explicitly verifying row counts (`applicants.csv` vs. `applications.csv`), traced to its root cause (cohort capacity being split evenly across all active programs instead of proportionally to expected demand), and fixed. Full details are in the repo's commit history and `docs/mysql.md`.
 
 This is called out deliberately: a pipeline completing without errors is not proof its output is correct.
 
