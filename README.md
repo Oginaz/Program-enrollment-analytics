@@ -2,7 +2,7 @@
 
 A synthetic data engineering and analytics project modeling the end-to-end program enrollment funnel for **Pwani Teknowgalz**, a Mombasa-based, women-led NGO equipping young women with digital and technology skills. Built for the **ITExperience Mid-Year Event 2026**, Data Analytics Track.
 
-Pwani Teknowgalz was unable to share real applicant data, so this project instead designs a relational database schema and generates a realistic, research-calibrated synthetic dataset — simulating how applicants move from registration through eligibility, interview, offer, enrollment, and program completion.
+Pwani Teknowgalz was unable to share real applicant data, so this project instead designs a relational database schema and generates a realistic, research-calibrated synthetic dataset simulating how applicants move from registration through eligibility, interview, offer, enrollment, and program completion.
 
 📄 **Read the full [Project Brief](docs/project_brief.md)** for the business problem, objectives, and success metrics this project is built around.
 
@@ -39,7 +39,7 @@ The project combines database design, synthetic data generation, data validation
 - Modular Python data generation pipeline, one generator per entity
 - Synthetic relational datasets with enforced foreign key consistency
 - Realistic applicant-to-program enrollment workflow, including funnel drop-off and rejection tracking
-- Configurable yearly enrollment trends reflecting the organization's actual growth phases (2015 founding → 2020 COVID-era spike → capacity-constrained decline → 2025–26 recovery)
+- Configurable yearly enrollment trends reflecting the organization's actual growth phases (2015 founding → 2020 COVID-era spike → capacity-constrained decline → 2023–26 recovery)
 - Cohort-based program management, respecting verified program launch years
 - Both cohort-level (capacity constraint) and participant-level (impact/beneficiary) resource tracking
 - Analytics-ready CSV outputs
@@ -115,7 +115,7 @@ The database is built on a normalized relational schema modeling the complete ap
 
 ## Synthetic Data Generation Pipeline
 
-Generation is dependency-driven, so every dataset is only generated once its prerequisite data exists — preserving referential integrity throughout:
+Generation is dependency-driven, so every dataset is only generated once its prerequisite data exists preserving referential integrity throughout:
 
 ```text
 config.py
@@ -190,14 +190,14 @@ This runs the full pipeline in dependency order (lookup tables → cohorts → a
 
 **Expected output on a successful run:**
 - `applicants.csv`: 20,543 records
-- `applications.csv`: 20,543 records (one per applicant — no drops)
+- `applications.csv`: 20,543 records (one per applicant;no drops)
 - `enrollments.csv`: 3,200–3,300 records (15–16% enrollment rate)
 
 ---
 
 ## Loading into MySQL
 
-Full step-by-step instructions — including which tables to load via the Table Data Import Wizard versus `LOAD DATA LOCAL INFILE`, and a troubleshooting table for common errors — are in **[`docs/mysql.md`](docs/mysql.md)**.
+Full step-by-step instructions including which tables to load via the Table Data Import Wizard versus `LOAD DATA LOCAL INFILE`, and a troubleshooting table for common errors  are in **[`docs/mysql.md`](docs/mysql.md)**.
 
 Quick summary of load order (required, due to foreign key dependencies):
 ```
@@ -223,7 +223,7 @@ The generated data is designed to:
 
 ## Reproducibility
 
-The project uses a fixed random seed (`RANDOM_SEED = 42` in `config.py`), so running the generator with the same configuration always produces identical datasets — making results comparable across team members and reruns.
+The project uses a fixed random seed (`RANDOM_SEED = 42` in `config.py`), so running the generator with the same configuration always produces identical datasets making results comparable across team members and reruns.
 
 ---
 
@@ -236,7 +236,7 @@ Full reasoning is documented in `docs/project_brief.md` (Assumptions & Risks) an
 - Cohorts run a fixed 3-month duration
 - Enrollment capacity is funding-constrained, not demand-constrained
 - Delivery mode: Physical (pre-2020) → Online (2020, COVID) → Physical (2021 onward)
-- The dataset represents the organization's state as of **August 2026** — completion status logic respects this snapshot date
+- The dataset represents the organization's state as of **August 2026** completion status logic respects this snapshot date
 - 30/90/180-day retention tracking was deliberately scoped out, since a 3-month program makes a 180-day checkpoint fall after the program has already ended
 
 ---
@@ -277,8 +277,8 @@ The generated datasets connect directly to MySQL for interactive analysis in Pow
 
 Developed as part of the ITExperience Mid-Year Event 2026.
 
-- **Sammy Shoka** — [GitHub](https://github.com/Oginaz) · [LinkedIn](https://www.linkedin.com/in/sammy-shoka)
-- **Sunday Layefa** — [GitHub](https://github.com/sundaylayefa) · [LinkedIn](https://www.linkedin.com/in/layefasunday)
+- **Sammy Shoka**  [GitHub](https://github.com/Oginaz) · [LinkedIn](https://www.linkedin.com/in/sammy-shoka)
+- **Sunday Layefa**  [GitHub](https://github.com/sundaylayefa) · [LinkedIn](https://www.linkedin.com/in/layefasunday)
 
 ---
 
