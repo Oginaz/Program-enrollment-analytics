@@ -12,7 +12,7 @@ Pwani Teknowgalz was unable to share real applicant data, so this project instea
 
 The project combines database design, synthetic data generation, data validation, and analytics into a modular, reproducible pipeline: an analytics-ready dataset that supports reporting, dashboarding, and evidence-based decision-making, without exposing any real organizational or personal data.
 
-**Current status:** database schema finalized, synthetic dataset generated and verified (20,543 applicants, 20,543 applications — zero data loss, ~15.7% enrollment rate matching the brief's baseline), fully loaded into MySQL. Power BI dashboard in progress.
+**Current status:** database schema finalized, synthetic dataset generated and verified (20,543 applicants, 20,543 applications  zero data loss, 15.7% enrollment rate matching the brief's baseline), fully loaded into MySQL. Power BI dashboard in progress.
 
 ---
 
@@ -147,7 +147,7 @@ allocation_generator.py    (resource_allocations + participant_resources)
 
 - Python 3.10 or later
 - Git
-- MySQL Server 8.0+ and MySQL Workbench (for database import — see `docs/mysql.md`)
+- MySQL Server 8.0+ and MySQL Workbench (for database import  see `docs/mysql.md`)
 - Power BI Desktop (for dashboard visualization)
 
 ### Clone the repository
@@ -191,7 +191,7 @@ This runs the full pipeline in dependency order (lookup tables → cohorts → a
 **Expected output on a successful run:**
 - `applicants.csv`: 20,543 records
 - `applications.csv`: 20,543 records (one per applicant — no drops)
-- `enrollments.csv`: ~3,200–3,300 records (~15–16% enrollment rate)
+- `enrollments.csv`: 3,200–3,300 records (15–16% enrollment rate)
 
 ---
 
@@ -243,7 +243,7 @@ Full reasoning is documented in `docs/project_brief.md` (Assumptions & Risks) an
 
 ## A Note on Data Integrity
 
-During development, a cohort-allocation bug caused **~94% of applicants to be silently dropped** from the dataset with no application record at all — despite the pipeline running without any errors. This was only caught by explicitly verifying row counts (`applicants.csv` vs. `applications.csv`), traced to its root cause (cohort capacity being split evenly across all active programs instead of proportionally to expected demand), and fixed. Full details are in the repo's commit history and `docs/mysql.md`.
+During development, a cohort-allocation bug caused **94% of applicants to be silently dropped** from the dataset with no application record at all — despite the pipeline running without any errors. This was only caught by explicitly verifying row counts (`applicants.csv` vs. `applications.csv`), traced to its root cause (cohort capacity being split evenly across all active programs instead of proportionally to expected demand), and fixed. Full details are in the repo's commit history and `docs/mysql.md`.
 
 This is called out deliberately: a pipeline completing without errors is not proof its output is correct.
 
@@ -278,7 +278,7 @@ The generated datasets connect directly to MySQL for interactive analysis in Pow
 Developed as part of the ITExperience Mid-Year Event 2026.
 
 - **Sammy Shoka** — [GitHub](https://github.com/Oginaz) · [LinkedIn](https://www.linkedin.com/in/sammy-shoka)
-- **Sunday Layefa**
+- **Sunday Layefa** — [GitHub](https://github.com/sundaylayefa) · [LinkedIn](https://www.linkedin.com/in/layefasunday)
 
 ---
 
@@ -298,4 +298,4 @@ This project is licensed under the MIT License. See [`LICENSE`](LICENSE) for det
 
 ## Final Note
 
-Data is more than numbers — it tells a story. This project demonstrates how synthetic data, grounded in real research rather than convenient guesses, can be transformed into meaningful insights through careful database design, rigorous validation, and reproducible engineering practice.
+Data is more than numbers  it tells a story. This project demonstrates how synthetic data, grounded in real research rather than convenient guesses, can be transformed into meaningful insights through careful database design, rigorous validation, and reproducible engineering practice.
