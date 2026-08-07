@@ -229,8 +229,7 @@ The project uses a fixed random seed (`RANDOM_SEED = 42` in `config.py`), so run
 
 ## Key Project Assumptions
 
-Full reasoning is documented in [docs/project_brief.md](docs/project_brief.md)  (Assumptions & Risks) and [docs/data_overview.md](docs/data_overview.md). 
-Highlights:
+Full reasoning is documented in `docs/project_brief.md` (Assumptions & Risks) and `docs/data_overview.md`. Highlights:
 
 - Programs are introduced progressively, matching verified launch years where evidence exists (e.g. CodeHack launched 2020); unverified programs are explicitly flagged as assumptions, not invented
 - Each applicant submits a single application per cohort cycle
