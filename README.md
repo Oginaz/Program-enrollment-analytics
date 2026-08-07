@@ -210,7 +210,7 @@ counties → application_channels → exit_reasons → resources → programs
 
 ## Data Generation Philosophy
 
-This project uses **synthetic data**, not real participant information. The organization did not share real applicant records, so all figures are modeled from publicly available research (the organization's website, LinkedIn, and media coverage) rather than actual historical data. See [docs/data_overview.md](docs/data_overview.md)for the full reasoning behind yearly applicant volumes, funnel conversion rates, and program timelines.
+This project uses **synthetic data**, not real participant information. The organization did not share real applicant records, so all figures are modeled from publicly available research (the organization's website, LinkedIn, and media coverage) rather than actual historical data. See [docs/data_overview.md](docs/data_overview.md) for the full reasoning behind yearly applicant volumes, funnel conversion rates, and program timelines.
 
 The generated data is designed to:
 - Preserve relational integrity
@@ -229,7 +229,8 @@ The project uses a fixed random seed (`RANDOM_SEED = 42` in `config.py`), so run
 
 ## Key Project Assumptions
 
-Full reasoning is documented in [docs/project_brief.md](docs/project_brief.md) (Assumptions & Risks) and [docs/data_overview.md](docs/data_overview.md). Highlights:
+Full reasoning is documented in [docs/project_brief.md](docs/project_brief.md)  (Assumptions & Risks) and [docs/data_overview.md](docs/data_overview.md). 
+Highlights:
 
 - Programs are introduced progressively, matching verified launch years where evidence exists (e.g. CodeHack launched 2020); unverified programs are explicitly flagged as assumptions, not invented
 - Each applicant submits a single application per cohort cycle
