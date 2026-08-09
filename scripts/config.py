@@ -60,16 +60,30 @@ APPLICATION_CHANNELS = [
 
 # EXIT REASONS
 EXIT_REASONS = [
+    # Eligibility
     {"exit_reason_id": 1, "stage": "Eligibility", "reason": "Did not meet eligibility requirements"},
     {"exit_reason_id": 2, "stage": "Eligibility", "reason": "Incomplete application"},
     {"exit_reason_id": 3, "stage": "Eligibility", "reason": "Missing required documents"},
     {"exit_reason_id": 4, "stage": "Eligibility", "reason": "Application submitted after deadline"},
-    {"exit_reason_id": 5, "stage": "Selection", "reason": "Cohort reached capacity"},
-    {"exit_reason_id": 6, "stage": "Interview", "reason": "Interview not attended"},
-    {"exit_reason_id": 7, "stage": "Interview", "reason": "Interview unsuccessful"},
-    {"exit_reason_id": 8, "stage": "Offer", "reason": "Offer declined"},
-    {"exit_reason_id": 9, "stage": "Enrollment", "reason": "Failed to confirm enrollment"},
-    {"exit_reason_id": 10, "stage": "Enrollment", "reason": "Withdrew voluntarily"},
+
+    # Selection
+    {"exit_reason_id": 5, "stage": "Selection", "reason": "Selection criteria not met"},
+    {"exit_reason_id": 6, "stage": "Selection", "reason": "Lower selection ranking"},
+    {"exit_reason_id": 7, "stage": "Selection", "reason": "Program requirements not matched"},
+
+    # Interview
+    {"exit_reason_id": 8, "stage": "Interview", "reason": "Interview not attended"},
+    {"exit_reason_id": 9, "stage": "Interview", "reason": "Interview unsuccessful"},
+
+    # Enrollment
+    {"exit_reason_id": 10, "stage": "Enrollment", "reason": "Declined offer - chose another program"},
+    {"exit_reason_id": 11, "stage": "Enrollment", "reason": "Did not respond to offer in time"},
+    {"exit_reason_id": 12, "stage": "Enrollment", "reason": "Could not afford participation costs"},
+    {"exit_reason_id": 13, "stage": "Enrollment", "reason": "Family did not permit participation"},
+    {"exit_reason_id": 14, "stage": "Enrollment", "reason": "Lost contact after offer"},
+    {"exit_reason_id": 15, "stage": "Enrollment", "reason": "Personal or health emergency"},
+    {"exit_reason_id": 16, "stage": "Enrollment", "reason": "Failed to complete enrollment requirements"},
+    {"exit_reason_id": 17, "stage": "Enrollment", "reason": "Withdrew voluntarily"},
 ]
 
 RESOURCES = [
