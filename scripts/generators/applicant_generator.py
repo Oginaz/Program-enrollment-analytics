@@ -20,124 +20,120 @@ from config import (
 
 random.seed(RANDOM_SEED)
 
+# Dataset snapshot date
+CURRENT_DATE = datetime(2026, 8, 1)
+
 FIRST_NAMES = [
-    "Amina","Halima","Fatuma","Saumu","Aisha",
-    "Mwanajuma","Mariam","Zainabu","Salma","Mishi",
-    "Neema","Joyce","Faith","Mercy","Brenda",
-    "Purity","Christine","Caroline","Rose","Grace",
-    "Janet","Sharon","Sheila","Dorcas","Esther",
-    "Ann","Lydia","Agnes","Diana","Cynthia"
+    "Amina", "Halima", "Fatuma", "Saumu", "Aisha",
+    "Mwanajuma", "Mariam", "Zainabu", "Salma", "Mishi",
+    "Neema", "Joyce", "Faith", "Mercy", "Brenda",
+    "Purity", "Christine", "Caroline", "Rose", "Grace",
+    "Janet", "Sharon", "Sheila", "Dorcas", "Esther",
+    "Ann", "Lydia", "Agnes", "Diana", "Cynthia"
 ]
 
 LAST_NAMES = [
-    "Juma","Mwajuma","Mwakio","Mwandawiro",
-    "Mwashumbe","Mghoi","Kazungu","Kombe",
-    "Baya","Kenga","Munga","Mwadime",
-    "Mwangeka","Masha","Mutiso","Kioko",
-    "Musyoka","Odhiambo","Achieng","Otieno",
-    "Omondi","Njeri","Wambui","Chebet",
+    "Juma", "Mwajuma", "Mwakio", "Mwandawiro",
+    "Mwashumbe", "Mghoi", "Kazungu", "Kombe",
+    "Baya", "Kenga", "Munga", "Mwadime",
+    "Mwangeka", "Masha", "Mutiso", "Kioko",
+    "Musyoka", "Odhiambo", "Achieng", "Otieno",
+    "Omondi", "Njeri", "Wambui", "Chebet",
     "Kemunto"
 ]
 
 PHONE_PREFIXES = [
-    "070","071","072","073","074",
-    "075","076","077","078","079",
-    "010","011"
+    "070", "071", "072", "073", "074",
+    "075", "076", "077", "078", "079",
+    "010", "011"
 ]
 
-EDUCATION_LEVELS = [
-    "Primary",
-    "Secondary",
-    "TVET",
-    "University"
-]
-
-INCOME_LEVELS = [
-    "Low",
-    "Lower-Middle",
-    "Middle",
-    "Upper-Middle"
-]
-
+EDUCATION_LEVELS = ["Primary", "Secondary", "TVET", "University"]
+INCOME_LEVELS = ["Low", "Lower-Middle", "Middle", "Upper-Middle"]
 GENDERS = ["Female"]
 
 
 # HELPER FUNCTIONS
-def weighted_program(year):
 
+def weighted_program(year):
     distribution = PROGRAM_DISTRIBUTION[year]
+
     program_ids = list(distribution.keys())
     weights = list(distribution.values())
 
-    selected_id = random.choices(
-        program_ids,
-        weights=weights,
-        k=1
-    )[0]
+    selected_id = random.choices(program_ids, weights=weights, k=1)[0]
 
     return next(
-        program
-        for program in PROGRAMS
+        program for program in PROGRAMS
         if program["program_id"] == selected_id
     )
 
 
 def weighted_county():
-
     county_ids = list(COUNTY_WEIGHTS.keys())
     weights = list(COUNTY_WEIGHTS.values())
 
-    selected = random.choices(
-        county_ids,
-        weights=weights,
-        k=1
-    )[0]
+    selected = random.choices(county_ids, weights=weights, k=1)[0]
 
     return next(
-        county
-        for county in COUNTIES
+        county for county in COUNTIES
         if county["county_id"] == selected
     )
 
 
 def random_phone():
-
     prefix = random.choice(PHONE_PREFIXES)
     suffix = "".join(str(random.randint(0, 9)) for _ in range(7))
-
     return prefix + suffix
 
 
 def random_birthdate(year):
-
     minimum_age = 17
     maximum_age = 28
 
-    birth_year = random.randint(
-        year - maximum_age,
-        year - minimum_age
-    )
-
+    birth_year = random.randint(year - maximum_age, year - minimum_age)
     month = random.randint(1, 12)
     day = random.randint(1, 28)
 
     return datetime(birth_year, month, day).date()
 
 
-# MAIN GENERATOR
-def generate():
+def random_registration_date(year):
+    """
+    Generate an application registration date.
 
+    For historical years, applications may occur throughout
+    the year.
+
+    For 2026, applications are restricted to the dataset
+    snapshot date of August 1, 2026.
+    """
+    start_date = datetime(year, 1, 1)
+
+    if year == CURRENT_DATE.year:
+        end_date = CURRENT_DATE
+    else:
+        end_date = datetime(year, 12, 28)
+
+    # Generate a random date between start and end.
+    days_available = (end_date - start_date).days
+    random_day = random.randint(0, days_available)
+
+    return (start_date + pd.Timedelta(days=random_day)).date()
+
+
+# MAIN GENERATOR
+
+def generate():
     applicants = []
     applicant_id = 1
 
     for year in YEAR_CONFIGURATION:
-
         yearly_target = YEAR_CONFIGURATION[year]["applications"]
 
         print(f"Generating {yearly_target} applicants for {year}")
 
         for _ in range(yearly_target):
-
             county = weighted_county()
             program = weighted_program(year)
 
@@ -146,7 +142,6 @@ def generate():
 
             email = (
                 first_name.lower()
-                #+ "."
                 + last_name.lower()
                 + str(random.randint(100, 999))
                 + "@gmail.com"
@@ -162,33 +157,22 @@ def generate():
                 "email": email,
                 "county_id": county["county_id"],
                 "education_level": random.choices(
-                    EDUCATION_LEVELS,
-                    weights=[15, 55, 15, 15]
+                    EDUCATION_LEVELS, weights=[15, 55, 15, 15]
                 )[0],
                 "income_level": random.choices(
-                    INCOME_LEVELS,
-                    weights=[45, 30, 18, 7]   # skewed low, matching marginalized-community target population
+                    INCOME_LEVELS, weights=[45, 30, 18, 7]
                 )[0],
-                "device_ownership": int(random.choices(
-                    [True, False],
-                    weights=[45, 55]
-                )[0]),
+                "device_ownership": int(
+                    random.choices([True, False], weights=[45, 55])[0]
+                ),
                 "program_id": program["program_id"],
-                "registered_at": datetime(
-                    year,
-                    random.randint(1, 12),
-                    random.randint(1, 28)
-                ).date()
+                "registered_at": random_registration_date(year)
             })
 
             applicant_id += 1
 
     df = pd.DataFrame(applicants)
-
-    df.to_csv(
-        DATA_DIR / "applicants.csv",
-        index=False
-    )
+    df.to_csv(DATA_DIR / "applicants.csv", index=False)
 
     print(f"✓ applicants.csv ({len(df)} records)")
 
