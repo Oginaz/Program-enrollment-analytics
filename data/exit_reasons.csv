@@ -3,9 +3,16 @@ exit_reason_id,stage,reason
 2,Eligibility,Incomplete application
 3,Eligibility,Missing required documents
 4,Eligibility,Application submitted after deadline
-5,Selection,Cohort reached capacity
-6,Interview,Interview not attended
-7,Interview,Interview unsuccessful
-8,Offer,Offer declined
-9,Enrollment,Failed to confirm enrollment
-10,Enrollment,Withdrew voluntarily
+5,Selection,Selection criteria not met
+6,Selection,Lower selection ranking
+7,Selection,Program requirements not matched
+8,Interview,Interview not attended
+9,Interview,Interview unsuccessful
+10,Enrollment,Declined offer - chose another program
+11,Enrollment,Did not respond to offer in time
+12,Enrollment,Could not afford participation costs
+13,Enrollment,Family did not permit participation
+14,Enrollment,Lost contact after offer
+15,Enrollment,Personal or health emergency
+16,Enrollment,Failed to complete enrollment requirements
+17,Enrollment,Withdrew voluntarily
