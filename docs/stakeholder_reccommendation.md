@@ -88,7 +88,7 @@ The current data cannot reliably establish whether resource availability influen
 
 ## Dashboard Highlights
 
-![Dashboard screenshot](../images/dashboard.jpeg)
+![Dashboard screenshot](../images/dashboard.jpeg.png)
 
 ## Recommendations
 
