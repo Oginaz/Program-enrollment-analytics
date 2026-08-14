@@ -1,4 +1,4 @@
-# Program Enrollment Analytics — Pwani Teknowgalz
+# Program Enrollment Analytics  Pwani Teknowgalz
 
 A synthetic data engineering and analytics project modeling the end-to-end program enrollment funnel for **Pwani Teknowgalz**, a Mombasa-based, women-led NGO equipping young women with digital and technology skills. Built for the **ITExperience Mid-Year Event 2026**, Data Analytics Track.
 
@@ -12,13 +12,13 @@ Pwani Teknowgalz was unable to share real applicant data, so this project instea
 
 The project combines database design, synthetic data generation, data validation, and analytics into a modular, reproducible pipeline: an analytics-ready dataset that supports reporting, dashboarding, and evidence-based decision-making, without exposing any real organizational or personal data.
 
-**Current status:** database schema finalized, synthetic dataset generated and verified (20,543 applicants, 20,543 applications — zero data loss, ~14.7% enrollment rate matching the brief's baseline), fully loaded into MySQL. SQL views built for dashboard consumption. Power BI dashboard in progress.
+**Current status:** database schema finalized, synthetic dataset generated and verified (20,543 applicants, 20,543 applications  zero data loss, ~14.7% enrollment rate matching the brief's baseline), fully loaded into MySQL. SQL views built for dashboard consumption. Power BI dashboard in progress.
 
 ---
 
 ## Documentation
 
-Detailed reasoning, numbers, and step-by-step instructions live in `docs/` rather than in this README — start here:
+Detailed reasoning, numbers, and step-by-step instructions live in `docs/` rather than in this README  start here:
 
 | Doc | Purpose |
 |---|---|
@@ -94,7 +94,7 @@ Program-enrollment-analytics/
 
 - Python 3.10 or later
 - Git
-- MySQL Server 8.0+ and MySQL Workbench (for database import — see [`docs/mysql.md`](docs/mysql.md))
+- MySQL Server 8.0+ and MySQL Workbench (for database import  see [`docs/mysql.md`](docs/mysql.md))
 - Power BI Desktop, plus MySQL Connector/NET (for dashboard visualization)
 
 ### Clone the repository
@@ -146,7 +146,7 @@ Full field-level detail on every table, and the reasoning behind these figures, 
 
 ## Loading into MySQL
 
-Full step-by-step instructions — including which tables to load via the Table Data Import Wizard versus `LOAD DATA LOCAL INFILE`, and a troubleshooting table for common errors — are in **[`docs/mysql.md`](docs/mysql.md)**.
+Full step-by-step instructions — including which tables to load via the Table Data Import Wizard versus `LOAD DATA LOCAL INFILE`, and a troubleshooting table for common errors  are in **[`docs/mysql.md`](docs/mysql.md)**.
 
 Quick summary of load order (required, due to foreign key dependencies):
 ```
@@ -161,15 +161,15 @@ counties → application_channels → exit_reasons → resources → programs
 
 ## Data Generation Philosophy & Key Assumptions
 
-This project uses **synthetic data**, not real participant information — the organization did not share real applicant records, so all figures are modeled from publicly available research rather than actual historical data. A cohort-allocation bug and a cohort-date-matching bug were both caught and fixed during development; see [`docs/project_brief.md`](docs/project_brief.md) (Assumptions & Risks) for the full account.
+This project uses **synthetic data**, not real participant information  the organization did not share real applicant records, so all figures are modeled from publicly available research rather than actual historical data. A cohort-allocation bug and a cohort-date-matching bug were both caught and fixed during development; see [`docs/project_brief.md`](docs/project_brief.md) (Assumptions & Risks) for the full account.
 
-Full reasoning behind every generation decision — yearly applicant volumes, funnel conversion rates, program timelines, exit-reason design, resource costs — is documented in [`docs/data_overview.md`](docs/data_overview.md), not duplicated here.
+Full reasoning behind every generation decision — yearly applicant volumes, funnel conversion rates, program timelines, exit-reason design, resource costs  is documented in [`docs/data_overview.md`](docs/data_overview.md), not duplicated here.
 
 ---
 
 ## Reproducibility
 
-The project uses a fixed random seed (`RANDOM_SEED = 42` in `config.py`), so running the generator with the same configuration always produces identical datasets — making results comparable across team members and reruns.
+The project uses a fixed random seed (`RANDOM_SEED = 42` in `config.py`), so running the generator with the same configuration always produces identical datasets  making results comparable across team members and reruns.
 
 ---
 

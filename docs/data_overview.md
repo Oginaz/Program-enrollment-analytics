@@ -23,7 +23,7 @@ This document explains what each table in the dataset contains, how the syntheti
 | Metric | Value |
 |---|---|
 | Total applicants | 20,543 |
-| Total applications | 20,543 (one per applicant — no drops) |
+| Total applications | 20,543 (one per applicant  no drops) |
 | Total enrollments | 3,014 |
 | Overall enrollment rate | ~14.7% |
 | Time span | 2015–2026 (partial year, through July) |
@@ -137,7 +137,7 @@ This document explains what each table in the dataset contains, how the syntheti
 | `enrollment_id`, `resource_id` | Foreign keys |
 | `quantity` | Almost always 1 |
 
-`resource_allocations` and `participant_resources` intentionally answer different questions — see `project_brief.md` for the reasoning. Both are also available as MySQL **views** for direct Power BI consumption — see `database/views/`.
+`resource_allocations` and `participant_resources` intentionally answer different questions — see `project_brief.md` for the reasoning. Both are also available as MySQL **views** for direct Power BI consumption  see `database/views/`.
 
 ---
 
@@ -147,12 +147,12 @@ Figures below are the **actual realized output** of the generator (not the raw t
 
 | Year | Applicants | Enrolled | Rate | Reasoning |
 |---|---|---|---|---|
-| 2015 | 120 | 16 | 13.3% | Founding era — small, informal, founders' own network |
+| 2015 | 120 | 16 | 13.3% | Founding era  small, informal, founders' own network |
 | 2016 | 180 | 38 | 21.1% | Early growth |
 | 2017 | 300 | 57 | 19.0% | Django Girls Mombasa launches |
 | 2018 | 450 | 93 | 20.7% | Mombasa Girls in STEM (Phase 2) |
 | 2019 | 700 | 138 | 19.7% | STEM Cafe Kenya launches, multi-region |
-| 2020 | 1,350 | 223 | 16.5% | **COVID-era peak** — CodeHack launches ("COVID-19 Edition"); virtual delivery removes geographic/physical barriers, reaching 6 counties at once |
+| 2020 | 1,350 | 223 | 16.5% | **COVID-era peak**  CodeHack launches ("COVID-19 Edition"); virtual delivery removes geographic/physical barriers, reaching 6 counties at once |
 | 2021 | 1,100 | 164 | 14.9% | Tech hub reopens physically (Feb 2021); reversion to Physical-only delivery reintroduces transport/venue/geographic constraints |
 | 2022 | 1,700 | 245 | 14.4% | Recovery continues, capacity-constrained |
 | 2023 | 2,700 | 326 | 12.1% | Applicant growth outpaces capacity — lowest point in the series |
@@ -161,7 +161,7 @@ Figures below are the **actual realized output** of the generator (not the raw t
 | 2026 (Jan–Jul, partial) | 4,543 | 653 | 14.4% | Continued, still well short of the 50% target |
 | **Total** | **20,543** | **3,014** | **~14.7%** | |
 
-**Why these don't exactly match the `YEAR_TARGET_RATE` values in `config.py`:** the generator no longer forces enrollment to hit a fixed percentage of *all* applicants directly. Instead it uses a two-pass design — first determining who is genuinely eligible, interviewed, and offered a seat (constrained by real cohort timing and capacity), then a genuine ~92% offer-acceptance step decides who actually enrolls among those with a real offer. The realized rate is therefore an *emergent result* of eligibility, interview, capacity, and offer-acceptance combined — not a number forced directly onto the output. This is a more realistic model, at the cost of the yearly rate no longer being a precise dial.
+**Why these don't exactly match the `YEAR_TARGET_RATE` values in `config.py`:** the generator no longer forces enrollment to hit a fixed percentage of *all* applicants directly. Instead it uses a two-pass design  first determining who is genuinely eligible, interviewed, and offered a seat (constrained by real cohort timing and capacity), then a genuine ~92% offer-acceptance step decides who actually enrolls among those with a real offer. The realized rate is therefore an *emergent result* of eligibility, interview, capacity, and offer-acceptance combined — not a number forced directly onto the output. This is a more realistic model, at the cost of the yearly rate no longer being a precise dial.
 
 ---
 
