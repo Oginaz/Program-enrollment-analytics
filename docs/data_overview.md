@@ -161,7 +161,7 @@ Figures below are the **actual realized output** of the generator (not the raw t
 | 2026 (Jan–Jul, partial) | 4,543 | 653 | 14.4% | Continued, still well short of the 50% target |
 | **Total** | **20,543** | **3,014** | **~14.7%** | |
 
-**Why these don't exactly match the `YEAR_TARGET_RATE` values in `config.py`:** the generator no longer forces enrollment to hit a fixed percentage of *all* applicants directly. Instead it uses a two-pass design  first determining who is genuinely eligible, interviewed, and offered a seat (constrained by real cohort timing and capacity), then a genuine ~92% offer-acceptance step decides who actually enrolls among those with a real offer. The realized rate is therefore an *emergent result* of eligibility, interview, capacity, and offer-acceptance combined — not a number forced directly onto the output. This is a more realistic model, at the cost of the yearly rate no longer being a precise dial.
+**The realized rate is therefore an *emergent result* of eligibility, interview, capacity, and offer-acceptance combined — not a number forced directly onto the output. This is a more realistic model, at the cost of the yearly rate no longer being a precise dial.
 
 ---
 
@@ -191,7 +191,7 @@ Exit reasons are split across **four funnel stages**, reflecting a deliberate re
 | **Selection** | Selection criteria not met, lower selection ranking, program requirements not matched | Used when a genuinely qualified applicant (passed interview) can't be offered a seat — either no cohort capacity remains, or the year's enrollment target has already been reached |
 | **Enrollment** | Declined offer, did not respond in time, could not afford costs, family did not permit, lost contact, personal/health emergency | Yes — used only when a **genuine offer was extended** (a real seat existed) but the applicant didn't convert |
 
-**Why Selection and Enrollment are separate:** earlier versions of the generator used a single "Cohort reached capacity" reason for every rejection between interview and enrollment — which dominated 80% of all drop-off and made it impossible to distinguish "we didn't have room" from "we had room and offered, but they didn't accept." Splitting this into two stages gives a much more useful answer to *"what factors contribute to drop-off at each funnel stage"* — Selection-stage counts reflect genuine capacity/competition, while Enrollment-stage counts reflect real applicant-side reasons for declining a real offer.
+
 
 ---
 
